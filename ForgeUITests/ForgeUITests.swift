@@ -31,11 +31,13 @@ final class ForgeUITests: XCTestCase {
         let nameField = app.textFields["exercise.name"]
         XCTAssertTrue(nameField.waitForExistence(timeout: 5))
         nameField.tap()
-        nameField.typeText("Test Cable Curl")
+        // A name that sorts to the top of the alphabetical library list, so the
+        // new row is materialized on-screen (List rows are lazy).
+        nameField.typeText("AAA Test Curl")
         app.buttons["exercise.save"].tap()
 
-        // The new exercise appears in the library list.
-        XCTAssertTrue(app.staticTexts["Test Cable Curl"].waitForExistence(timeout: 5))
+        // The new exercise appears at the top of the library list.
+        XCTAssertTrue(app.staticTexts["AAA Test Curl"].waitForExistence(timeout: 10))
     }
 
     func testStartAndFinishEmptyWorkout() {
