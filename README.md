@@ -212,12 +212,24 @@ ForgeUITests/             UI tests (run with -UITestMode, in-memory store)
   same file twice is harmless.
 - **CSV**: one row per set (workouts), per run, and per measurement, RFC-4180 escaping.
 
-## Known limitations
+## Continuous integration (verified build & tests)
 
-- **Not compiled in this workspace**: this project was authored in a Linux CI container
-  without Xcode or a Swift toolchain, so `xcodebuild`/tests could not be executed here.
-  The code was written conservatively for iOS 17/Xcode 16 APIs and passed automated
-  structural validation, but expect the possibility of minor compile fixes on first build.
+`.github/workflows/ios-ci.yml` builds and tests Forge on a GitHub-hosted macOS runner
+on every push to the development branch (plus manual dispatch and PRs to `main`).
+Verified result on **macOS 15.7, Xcode 16.4 (16F6), Swift 6.1.2, iPhone 17 Pro
+simulator**:
+
+- App target: **builds cleanly — zero Swift compiler errors and zero Swift source
+  warnings** (`** BUILD SUCCEEDED **`)
+- Unit tests (`ForgeTests`): **68 passed, 0 failed, 0 skipped** (`** TEST SUCCEEDED **`)
+- UI tests (`ForgeUITests`): **8 passed, 0 failed** (`** TEST SUCCEEDED **`)
+- Full logs and `.xcresult` bundles are uploaded as the `forge-ios-ci-diagnostics`
+  artifact on every run (kept 14 days), including failed runs.
+
+Simulator builds run with `CODE_SIGNING_ALLOWED=NO`; no certificates, profiles, team
+IDs or secrets are stored in the repository.
+
+## Known limitations
 - iCloud sync requires the manual capability setup described above.
 - HealthKit strength-workout writing records duration only (sets/reps stay in Forge).
 - Rest timers are intentionally minimal (a hold/rest timer exists for flexibility
@@ -228,7 +240,8 @@ ForgeUITests/             UI tests (run with -UITestMode, in-memory store)
 
 ## Recommended next improvements
 
-1. Compile on a Mac, fix any first-build issues, and run the full test plan.
+1. Install on a physical iPhone (signing steps above) and verify Face ID, HealthKit,
+   notifications and PhotosPicker on-device.
 2. Enable CloudKit sync (steps above) and test two-device merge behavior.
 3. Add a widget (today's plan + week ring) and Live Activity for active workouts.
 4. Add plate-math calculator and bar-loading hints in the live workout.
