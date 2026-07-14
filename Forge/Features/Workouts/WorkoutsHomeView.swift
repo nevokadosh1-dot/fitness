@@ -160,23 +160,23 @@ struct WorkoutsHomeView: View {
     private var modulesSection: some View {
         VStack(spacing: Spacing.s) {
             SectionHeader("Modules")
-            moduleLink(title: "Running", subtitle: "Log runs, splits and time trials", icon: "figure.run", tint: Theme.running) {
+            moduleLink(title: "Running", subtitle: "Log runs, splits and time trials", icon: "figure.run", tint: Theme.running, identifier: "train.module.running") {
                 RunningHomeView()
             }
-            moduleLink(title: "Flexibility", subtitle: "Splits, stretching and mobility", icon: "figure.flexibility", tint: Theme.flexibility) {
+            moduleLink(title: "Flexibility", subtitle: "Splits, stretching and mobility", icon: "figure.flexibility", tint: Theme.flexibility, identifier: "train.module.flexibility") {
                 FlexibilityHomeView()
             }
-            moduleLink(title: "Exercise Library", subtitle: "Browse, edit and create exercises", icon: "books.vertical.fill", tint: Theme.accent) {
+            moduleLink(title: "Exercise Library", subtitle: "Browse, edit and create exercises", icon: "books.vertical.fill", tint: Theme.accent, identifier: "train.module.library") {
                 ExerciseLibraryView()
             }
-            moduleLink(title: "History", subtitle: "Every logged session, searchable", icon: "clock.arrow.circlepath", tint: Theme.gold) {
+            moduleLink(title: "History", subtitle: "Every logged session, searchable", icon: "clock.arrow.circlepath", tint: Theme.gold, identifier: "train.module.history") {
                 HistoryView()
             }
         }
     }
 
     private func moduleLink<Destination: View>(
-        title: String, subtitle: String, icon: String, tint: Color,
+        title: String, subtitle: String, icon: String, tint: Color, identifier: String,
         @ViewBuilder destination: @escaping () -> Destination
     ) -> some View {
         NavigationLink {
@@ -204,5 +204,6 @@ struct WorkoutsHomeView: View {
             }
         }
         .buttonStyle(.plain)
+        .accessibilityIdentifier(identifier)
     }
 }

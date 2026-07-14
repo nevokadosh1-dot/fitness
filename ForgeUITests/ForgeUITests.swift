@@ -22,8 +22,10 @@ final class ForgeUITests: XCTestCase {
     func testCreateExerciseFlow() {
         let app = launchApp()
         app.tabBars.buttons["Train"].tap()
-        app.buttons["Exercise Library"].firstMatch.tap()
-        XCTAssertTrue(app.buttons["library.newExercise"].waitForExistence(timeout: 5))
+        let libraryLink = app.buttons["train.module.library"]
+        XCTAssertTrue(libraryLink.waitForExistence(timeout: 10))
+        libraryLink.tap()
+        XCTAssertTrue(app.buttons["library.newExercise"].waitForExistence(timeout: 10))
         app.buttons["library.newExercise"].tap()
 
         let nameField = app.textFields["exercise.name"]
@@ -77,7 +79,9 @@ final class ForgeUITests: XCTestCase {
     func testLogRunManually() {
         let app = launchApp()
         app.tabBars.buttons["Train"].tap()
-        app.buttons["Running"].firstMatch.tap()
+        let runningLink = app.buttons["train.module.running"]
+        XCTAssertTrue(runningLink.waitForExistence(timeout: 10))
+        runningLink.tap()
 
         let newRun = app.buttons["running.newRun"]
         if newRun.waitForExistence(timeout: 5) {
@@ -105,10 +109,12 @@ final class ForgeUITests: XCTestCase {
     func testBodyMeasurementEntry() {
         let app = launchApp()
         app.tabBars.buttons["Progress"].tap()
-        app.buttons["Body Measurements"].firstMatch.tap()
+        let bodyLink = app.buttons["progress.body"]
+        XCTAssertTrue(bodyLink.waitForExistence(timeout: 10))
+        bodyLink.tap()
 
         let add = app.buttons["body.addEntry"]
-        XCTAssertTrue(add.waitForExistence(timeout: 5))
+        XCTAssertTrue(add.waitForExistence(timeout: 10))
         add.tap()
 
         let value = app.textFields["body.value"]

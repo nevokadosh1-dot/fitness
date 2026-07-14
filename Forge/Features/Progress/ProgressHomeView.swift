@@ -38,19 +38,19 @@ struct ProgressHomeView: View {
                     .buttonStyle(.plain)
 
                     sectionLink(title: "Personal Records", subtitle: recordsSubtitle,
-                                icon: "trophy.fill", tint: Theme.gold) {
+                                icon: "trophy.fill", tint: Theme.gold, identifier: "progress.records") {
                         PersonalRecordsView()
                     }
                     sectionLink(title: "Insights", subtitle: insightsSubtitle,
-                                icon: "lightbulb.fill", tint: Theme.accent) {
+                                icon: "lightbulb.fill", tint: Theme.accent, identifier: "progress.insights") {
                         InsightsView()
                     }
                     sectionLink(title: "Body Measurements", subtitle: "Weight, girths and custom metrics",
-                                icon: "figure.arms.open", tint: Theme.body) {
+                                icon: "figure.arms.open", tint: Theme.body, identifier: "progress.body") {
                         BodyMeasurementsView()
                     }
                     sectionLink(title: "Progress Photos", subtitle: "Private gallery with compare mode",
-                                icon: "photo.on.rectangle.angled", tint: Theme.flexibility) {
+                                icon: "photo.on.rectangle.angled", tint: Theme.flexibility, identifier: "progress.photos") {
                         ProgressPhotosView()
                     }
                 }
@@ -75,7 +75,7 @@ struct ProgressHomeView: View {
     }
 
     private func sectionLink<Destination: View>(
-        title: String, subtitle: String, icon: String, tint: Color,
+        title: String, subtitle: String, icon: String, tint: Color, identifier: String,
         @ViewBuilder destination: @escaping () -> Destination
     ) -> some View {
         NavigationLink {
@@ -103,6 +103,7 @@ struct ProgressHomeView: View {
             }
         }
         .buttonStyle(.plain)
+        .accessibilityIdentifier(identifier)
     }
 
     private func refresh() {
